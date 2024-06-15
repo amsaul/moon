@@ -1,0 +1,66 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Lesson {
+  content         String?
+  createdAt       DateTime                    @default(now())
+  exercises       EnumLessonExercises[]
+  id              String                      @id @default(cuid())
+  lessonVideoUrl  String?
+  linkedExercises EnumLessonLinkedExercises[]
+  relatedCourse   String?
+  title           String?
+  updatedAt       DateTime                    @updatedAt
+  videoUrl        String?
+}
+
+model Course {
+  createdAt   DateTime            @default(now())
+  description String?
+  id          String              @id @default(cuid())
+  language    EnumCourseLanguage?
+  lessons     EnumCourseLessons[]
+  level       EnumCourseLevel?
+  title       String?
+  updatedAt   DateTime            @updatedAt
+}
+
+model Exercise {
+  codeTemplate         String?
+  createdAt            DateTime @default(now())
+  exerciseCodeTemplate String?
+  exerciseInstructions String?
+  exerciseTestCases    String?
+  id                   String   @id @default(cuid())
+  instructions         String?
+  relatedLesson        String?
+  testCases            String?
+  title                String?
+  updatedAt            DateTime @updatedAt
+}
+
+enum EnumLessonExercises {
+  Option1
+}
+
+enum EnumLessonLinkedExercises {
+  Option1
+}
+
+enum EnumCourseLanguage {
+  Option1
+}
+
+enum EnumCourseLessons {
+  Option1
+}
+
+enum EnumCourseLevel {
+  Option1
+}
